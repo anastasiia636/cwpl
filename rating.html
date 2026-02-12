@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Матрешка — Рейтинг</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="screen screen-rating">
+  <header class="app-header">
+    <div class="header-content">
+      <div class="header-decoration header-decoration-left"></div>
+      <div class="logo">
+        <div class="logo-matreshka matreshka medium red"></div>
+        <span class="logo-text">Матрешка</span>
+      </div>
+      <div class="header-decoration header-decoration-right"></div>
+    </div>
+  </header>
+  <div class="container">
+    <div class="card">
+      <h2>Рейтинг игроков</h2>
+      
+      <table class="rating-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Имя</th>
+            <th>Лучший результат</th>
+            <th>Время прохождения</th>
+            <th>Дата</th>
+          </tr>
+        </thead>
+        <tbody id="ratingTableBody">
+        </tbody>
+      </table>
+
+      <button id="backToStartBtn" class="btn">На заставку</button>
+    </div>
+  </div>
+
+  <script src="Game_Лейкина_Матрешка.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      window.MatreshkaGame.initRatingPage();
+      
+      // Клик по логотипу возвращает на главную
+      const logo = document.querySelector('.logo');
+      if (logo) {
+        logo.addEventListener('click', () => {
+          window.location.href = 'index.html';
+        });
+      }
+    });
+  </script>
+</body>
+</html>

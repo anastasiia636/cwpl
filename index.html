@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Матрешка — Заставка</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="screen screen-start">
+  <header class="app-header">
+    <div class="header-content">
+      <div class="header-decoration header-decoration-left"></div>
+      <div class="logo">
+        <div class="logo-matreshka matreshka medium red"></div>
+        <span class="logo-text">Матрешка</span>
+      </div>
+      <div class="header-decoration header-decoration-right"></div>
+    </div>
+  </header>
+  <div class="container">
+    <h1 class="title">Игровое приложение "Матрешка"</h1>
+
+    <div class="card">
+      <h2>Мини‑авторизация</h2>
+      <label for="playerName">Введите ваше имя:</label>
+      <input type="text" id="playerName" placeholder="Имя" maxlength="20">
+      <button id="startGameBtn" class="btn primary">Начать игру</button>
+    </div>
+
+    <div class="card">
+      <h2>Режим проверки</h2>
+      <p class="hint">
+        Для преподавателя: можно начать сразу с нужного уровня.
+      </p>
+      <div class="level-buttons">
+        <button data-level="1" class="btn ghost level-skip">Уровень 1</button>
+        <button data-level="2" class="btn ghost level-skip">Уровень 2</button>
+        <button data-level="3" class="btn ghost level-skip">Уровень 3</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Рейтинг</h2>
+      <p class="hint" style="margin-top: 0; margin-bottom: 16px;">
+        Просмотрите таблицу лучших результатов игроков.
+      </p>
+      <button id="openRatingBtn" class="btn">Посмотреть рейтинг</button>
+    </div>
+  </div>
+
+  <script src="Game_Лейкина_Матрешка.js"></script>
+  <script>
+    // Простая логика заставки
+    (function () {
+      const nameInput = document.getElementById('playerName');
+      const startBtn = document.getElementById('startGameBtn');
+      const ratingBtn = document.getElementById('openRatingBtn');
+      const skipButtons = document.querySelectorAll('.level-skip');
+
+      startBtn.addEventListener('click', () => {
+        const name = nameInput.value.trim();
+        if (!name) {
+          if (window.MatreshkaGame && window.MatreshkaGame.showMessage) {
+            window.MatreshkaGame.showMessage(
+              'Внимание',
+              'Пожалуйста, введите имя.',
+              'warning'
+            );
+          } else {
+            alert('Пожалуйста, введите имя.');
+          }
+          return;
+        }
+        localStorage.setItem('matreshka_currentPlayer', JSON.stringify({
+          name,
+          startLevel: 1
+        }));
+        window.location.href = 'game.html';
+      });
+
+      skipButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const level = Number(btn.dataset.level);
+          const name = nameInput.value.trim() || 'Преподаватель';
+          localStorage.setItem('matreshka_currentPlayer', JSON.stringify({
+            name,
+            startLevel: level
+          }));
+          window.location.href = 'game.html';
+        });
+      });
+
+      ratingBtn.addEventListener('click', () => {
+        window.location.href = 'rating.html';
+      });
+
+      // Клик по логотипу возвращает на главную
+      const logo = document.querySelector('.logo');
+      if (logo) {
+        logo.addEventListener('click', () => {
+          window.location.href = 'index.html';
+        });
+      }
+    })();
+  </script>
+</body>
+</html>

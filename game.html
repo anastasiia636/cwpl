@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Матрешка — Игра</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="screen screen-game">
+  <header class="app-header">
+    <div class="header-content">
+      <div class="header-decoration header-decoration-left"></div>
+      <div class="logo">
+        <div class="logo-matreshka matreshka medium red"></div>
+        <span class="logo-text">Матрешка</span>
+      </div>
+      <div class="header-decoration header-decoration-right"></div>
+    </div>
+  </header>
+  <div class="container">
+    <header class="top-bar">
+      <div>
+        <span class="label">Игрок:</span>
+        <span id="playerNameDisplay" class="value"></span>
+      </div>
+      <div>
+        <span class="label">Уровень:</span>
+        <span id="levelDisplay" class="value"></span>
+      </div>
+      <div>
+        <span class="label">Очки:</span>
+        <span id="scoreDisplay" class="value"></span>
+      </div>
+      <div>
+        <span class="label">Жизни:</span>
+        <span id="livesDisplay" class="value"></span>
+      </div>
+      <div>
+        <span class="label">Время:</span>
+        <span id="timerDisplay" class="value"></span>
+      </div>
+    </header>
+
+    <main id="gameArea" class="game-area">
+      <!-- Сюда динамически генерируется содержимое уровней -->
+    </main>
+
+    <footer class="bottom-bar">
+      <button id="endLevelBtn" class="btn danger">Завершить уровень</button>
+      <button id="toMenuBtn" class="btn">Завершить игру</button>
+    </footer>
+  </div>
+
+  <script src="Game_Лейкина_Матрешка.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      window.MatreshkaGame.initGamePage();
+      
+      // Клик по логотипу возвращает на главную
+      const logo = document.querySelector('.logo');
+      if (logo) {
+        logo.addEventListener('click', () => {
+          if (window.MatreshkaGame && window.MatreshkaGame.showConfirm) {
+            window.MatreshkaGame.showConfirm(
+              'Вернуться на главную?',
+              'Вернуться на главную страницу? Текущая игра будет завершена.',
+              () => window.location.href = 'index.html'
+            );
+          } else {
+            if (confirm('Вернуться на главную страницу? Текущая игра будет завершена.')) {
+              window.location.href = 'index.html';
+            }
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>
